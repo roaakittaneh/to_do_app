@@ -1,3 +1,5 @@
+//I edited the whole file because I submitted the wrong file last week and now I noticed
+
 const taskInput = document.getElementById('input');
 const addBtn = document.getElementById('addBtn');
 const taskList = document.getElementById('taskList');
@@ -37,3 +39,4 @@ taskInput.addEventListener('keypress', e => {
     if (e.key === 'Enter')
        addTask();
 });
+
