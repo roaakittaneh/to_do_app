@@ -1,61 +1,39 @@
+const taskInput = document.getElementById('input');
+const addBtn = document.getElementById('addBtn');
+const taskList = document.getElementById('taskList');
 
-    const input = document.getElementById('Input');
-    const addBtn = document.getElementById('addBtn');
-    const taskList = document.getElementById('taskList');
+function addTask() {
 
-    // دالة إنشاء مهمة جديدة (DOM Manipulation بالكامل)
-    function addTask() {
-      const taskText = input.value.trim();
-      if (taskText === "") return;
 
-      // إنشاء عناصر المهمة
-      const li = document.createElement('li');
-      const checkbox = document.createElement('input');
-      const span = document.createElement('span');
-      const deleteBtn = document.createElement('button');
+    const text = taskInput.value.trim();
+    if (!text) return;
 
-      // إعداداتهم
-      checkbox.type = "checkbox";
-      checkbox.classList.add("task-check");
+    const li = document.createElement('li');
 
-      span.textContent = taskText;
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.addEventListener('change', () => li.classList.toggle('completed'));
 
-      deleteBtn.textContent = "Delete";
-      deleteBtn.classList.add("delete-btn");
+    const span = document.createElement('span');
+    span.textContent = text;
 
-      // ترتيب العناصر داخل li
-      li.appendChild(checkbox);
-      li.appendChild(span);
-      li.appendChild(deleteBtn);
+    const deleteBtn = document.createElement('button');
+    deleteBtn.classList.add('delete-btn');
 
-      // إضافة المهمة للقائمة
-      taskList.appendChild(li);
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.addEventListener('click', () => li.remove());
 
-      input.value = "";
-      input.focus();
-    }
+    li.append(checkbox, span, deleteBtn);
+    taskList.appendChild(li);
 
-    // 📌 Click Event: إضافة مهمة
-    addBtn.addEventListener('click', addTask);
+    taskInput.value = '';
+}
 
-    // 📌 Keyboard Event: Enter لإضافة مهمة
-    input.addEventListener('keydown', function(e) {
-      if (e.key === "Enter") {
-        addTask();
-      }
-    });
 
-    // 📌 Event Delegation (على UL)
-    taskList.addEventListener('click', function(e) {
-      // إكمال المهمة
-      if (e.target.classList.contains('task-check')) {
-        const span = e.target.nextElementSibling;
-        span.classList.toggle('completed'); // classList.toggle
-      }
+addBtn.addEventListener('click', addTask);
 
-      // حذف المهمة
-      if (e.target.classList.contains('delete-btn')) {
-        e.target.parentElement.remove(); // remove element dynamically
-      }
-    });
-  
+
+taskInput.addEventListener('keypress', e => {
+    if (e.key === 'Enter')
+       addTask();
+});
